@@ -111,7 +111,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //opens main activity
-                Intent SignActivity = new Intent(getApplicationContext(),SignInActivity.class);
+                Intent SignActivity = new Intent(getApplicationContext(), GoogleSignInActivity.class);
                 startActivity(SignActivity);
                 savePrefsData();
                 finish();

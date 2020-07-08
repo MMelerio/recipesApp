@@ -23,7 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class SignInActivity extends AppCompatActivity {
+public class GoogleSignInActivity extends AppCompatActivity {
 
     public static final int GOOGLE_SIGN_IN_CODE = 10005;
     SignInButton signIn;
