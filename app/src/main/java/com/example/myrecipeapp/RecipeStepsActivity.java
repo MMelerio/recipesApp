@@ -1,13 +1,14 @@
 package com.example.myrecipeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,10 @@ public class RecipeStepsActivity extends AppCompatActivity {
     private static final String TAG = "RecipeStepsActivity";
 
     public int recipe_id;
+    public String title;
+    RecyclerView mRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
+    RecyclerView.Adapter mAdapter;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -42,6 +47,11 @@ public class RecipeStepsActivity extends AppCompatActivity {
         // Get the Intent that started this activity
         Intent intent = getIntent();
         recipe_id = intent.getIntExtra("recipe_id", 0);
+        title = intent.getStringExtra("recipe_title");
+
+        TextView textView = findViewById(R.id.recipeTitle);
+        textView.setText(title);
+
 
         // Set up a new instance of our runnable object that will be run on the background thread
         GetRecipeStepsAsync getRecipeStepsAsync = new GetRecipeStepsAsync(this, recipe_id);
@@ -77,11 +87,11 @@ public class RecipeStepsActivity extends AppCompatActivity {
             }
 
 
-            // Show the temperature to the user
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_steps_layout, stepString);
-
-            ListView listView = (ListView)findViewById(R.id.stepDetails);
-            listView.setAdapter(adapter);
+            mRecyclerView = (RecyclerView) findViewById(R.id.stepDetails);
+            mLayoutManager = new LinearLayoutManager(this);
+            mAdapter = new StepsAdapter(stepString);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
 
         }
     }

@@ -146,6 +146,7 @@ public class RecipeResultsActivity extends AppCompatActivity {
              // When clicked, open new Activity for Recipe's full info
              Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
              intent.putExtra("recipe_id", recipes.get(position).getId());
+             intent.putExtra("recipe_title", recipes.get(position).getTitle());
              startActivity(intent);
              }
              });
