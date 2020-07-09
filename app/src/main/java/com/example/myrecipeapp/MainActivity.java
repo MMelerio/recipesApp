@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                startActivity( new Intent(view.getContext(), GoogleSignInActivity.class));
+                startActivity( new Intent(view.getContext(), SignInActivity.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

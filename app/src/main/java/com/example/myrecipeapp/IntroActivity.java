@@ -111,7 +111,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //opens main activity
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intent);
                 savePrefsData();
                 finish();

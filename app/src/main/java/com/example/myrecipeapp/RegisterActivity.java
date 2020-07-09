@@ -42,11 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mFullName   = findViewById(R.id.fullName);
-        mEmail      = findViewById(R.id.Email);
-        mPassword   = findViewById(R.id.password);
+        mFullName = findViewById(R.id.fullName);
+        mEmail = findViewById(R.id.Email);
+        mPassword = findViewById(R.id.password);
         mRegisterBtn= findViewById(R.id.registerBtn);
-        mLoginBtn   = findViewById(R.id.createText);
+        mLoginBtn = findViewById(R.id.createText);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -128,12 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
             }
         });
 
