@@ -23,7 +23,7 @@
         android:layout_alignBottom="@+id/recipeImage"
         android:layout_marginBottom="0dp"
         android:background="#BFFFFFFF"
-        android:fontFamily="@font/arimo_bold"
+        android:fontFamily="@font/roboto"
         android:padding="10dp"
         android:scrollHorizontally="false"
         android:text="TextView"

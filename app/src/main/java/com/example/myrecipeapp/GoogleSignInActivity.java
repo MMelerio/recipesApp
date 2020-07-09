@@ -1,15 +1,15 @@
 package com.example.myrecipeapp;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class GoogleSignInActivity extends AppCompatActivity {
-
     public static final int GOOGLE_SIGN_IN_CODE = 10005;
     SignInButton signIn;
     GoogleSignInOptions gso;
@@ -34,7 +33,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_login);
         signIn = findViewById(R.id.google_signIn);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -59,33 +58,31 @@ public class GoogleSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent sign = signInClient.getSignInIntent();
                 startActivityForResult(sign, GOOGLE_SIGN_IN_CODE);
-
+                Log.d("GoogleSignInActivity", "Test");
             }
         });
-
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == GOOGLE_SIGN_IN_CODE) {
-                Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
-                try {
-                    GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
-                    AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
+        if (requestCode == GOOGLE_SIGN_IN_CODE) {
+            Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
+                AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
 
-                    firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Toast.makeText(getApplicationContext(), "Log in Successfully", Toast.LENGTH_SHORT).show();startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(getApplicationContext(), "Log in Successfully", Toast.LENGTH_SHORT).show();startActivity(new Intent(getApplicationContext(), SearchActivity.class));
 
-                        }
-                    });
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                }
-            } }
+                    }
+                });
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
+        } }
+
 
 }
-

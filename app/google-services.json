@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "638338862867-0hr6m0b82me372kjrbrhg2sh367hi6qm.apps.googleusercontent.com",
+          "client_id": "638338862867-5sccfl6vqvl2hh91u2soqe8rb98bml0b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.myrecipeapp",
@@ -36,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "638338862867-i1u2f3suo01243hq381dcfj11odva39p.apps.googleusercontent.com",
+              "client_id": "638338862867-482vgvl4ltrd2akbvf6bmcke5adiclse.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

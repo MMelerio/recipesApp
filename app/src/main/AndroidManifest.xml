@@ -13,19 +13,24 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RecipeStepsActivity" />
         <activity android:name=".GoogleSignInActivity">
+        </activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RegisterActivity">
         </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity" />
         <activity android:name=".IntroActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".RecipeResultsActivity" />
         <activity android:name=".FiltersActivity" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
