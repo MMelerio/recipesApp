@@ -11,16 +11,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RecipeStepsActivity" />
         <activity android:name=".SignInActivity">
+        </activity>
+        <activity android:name=".RegisterActivity">
+        </activity>
+<!--        <activity android:name=".MainActivity" />-->
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity">
-        </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".IntroActivity" />
+        <activity android:name=".IntroActivity"/>
         <activity android:name=".SearchActivity" />
         <activity android:name=".RecipeResultsActivity" />
         <activity android:name=".FiltersActivity" />

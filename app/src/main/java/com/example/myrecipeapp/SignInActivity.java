@@ -63,7 +63,6 @@ public class SignInActivity extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 

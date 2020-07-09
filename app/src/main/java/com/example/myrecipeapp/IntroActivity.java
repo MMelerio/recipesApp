@@ -1,5 +1,6 @@
 package com.example.myrecipeapp;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import com.google.android.material.tabs.TabLayout;
@@ -25,21 +26,17 @@ public class IntroActivity extends AppCompatActivity {
     Animation btnAnim ;
     TextView tvSkip;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         // Checks if application has been launched before
         if (restorePrefData()) {
-            Intent SignInActivity = new Intent(getApplicationContext(), SearchActivity.class );
-            startActivity(SignInActivity);
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
             finish();
         }
 
         setContentView(R.layout.activity_intro);
-
 
         // ini views
         btnNext = findViewById(R.id.btn_next);
@@ -66,44 +63,30 @@ public class IntroActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 position = screenPager.getCurrentItem();
                 if (position < mList.size()) {
-
                     position++;
                     screenPager.setCurrentItem(position);
-
                 }
 
                 if (position == mList.size()-1) { // when we reach to the last screen
-
                     loadLastScreen();
-
-
-                }
-
-            }
+                } }
         });
 
         // Tablayout add change listener
         tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 if (tab.getPosition() == mList.size()-1) {
                     loadLastScreen();
                 }
             }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         // Get Started button click listener
@@ -120,7 +103,6 @@ public class IntroActivity extends AppCompatActivity {
         });
 
         // skip button click listener
-
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,14 +111,14 @@ public class IntroActivity extends AppCompatActivity {
         });
 
     }
+
     private boolean restorePrefData() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
         return pref.getBoolean("isIntroOpened",false);
 
     }
     private void savePrefsData() {
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("isIntroOpened",true);
         editor.apply();
@@ -144,7 +126,6 @@ public class IntroActivity extends AppCompatActivity {
 
     // Display the GET STARTED Button and hide the indicator and the next button
     private void loadLastScreen() {
-
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tvSkip.setVisibility(View.INVISIBLE);
