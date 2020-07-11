@@ -37,13 +37,11 @@ public class SignInActivity extends AppCompatActivity {
     SignInButton signIn;
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth fAuth;
     EditText mEmail,mPassword;
     Button mLoginBtn;
     TextView mCreateBtn,forgotTextLink;
     ProgressBar progressBar;
-    FirebaseAuth fAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,7 @@ public class SignInActivity extends AppCompatActivity {
         mCreateBtn = findViewById(R.id.createText);
         forgotTextLink = findViewById(R.id.forgotPassword);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
+        fAuth = FirebaseAuth.getInstance();
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,14 +80,14 @@ public class SignInActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                // authenticate the user
-                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if(task.isSuccessful()){
                             Toast.makeText(SignInActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-                        } else {
+                        }else {
                             Toast.makeText(SignInActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
@@ -100,7 +97,6 @@ public class SignInActivity extends AppCompatActivity {
 
             }
         });
-
 
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +159,7 @@ public class SignInActivity extends AppCompatActivity {
 
         // Checks if user has logged in before
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
+        if (signInAccount != null || fAuth.getCurrentUser() != null) {
             // Toast.makeText(this, "You are already Logged in", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, SearchActivity.class));
         }
@@ -188,7 +184,7 @@ public class SignInActivity extends AppCompatActivity {
                 GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
 
-                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Toast.makeText(getApplicationContext(), "Log in Successfully", Toast.LENGTH_SHORT).show();startActivity(new Intent(getApplicationContext(), SearchActivity.class));
