@@ -4,12 +4,12 @@ import android.util.Log;
 
 public class GetRecipeStepsAsync implements Runnable {
 
-    private RecipeStepsActivity activity;;
+    private RecipeStepsActivity activity;
 
     private int recipe_id;
 
     /**
-     * Sets up the runnable to be called. It needs the MainActivity so it can run code on the
+     * Sets up the runnable to be called. It needs the BaseActivity so it can run code on the
      * UI thread, and also the id so that it can get the recipe steps.
      * @param activity
      * @param recipe_id
@@ -37,7 +37,7 @@ public class GetRecipeStepsAsync implements Runnable {
                     @Override
                     public void run() {
                         // This is code that will now run on the UI thread. Call the function in
-                        // MainActivity that will update the UI correctly.
+                        // BaseActivity that will update the UI correctly.
                         activity.handleStepsListResult(recipe);
                     }
                 });

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +30,9 @@ public class RecipeResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_results);
+        FrameLayout contentFrameLayout = findViewById(R.id.content_frame); //this is the FrameLayout area within activity_main.xml
+        getLayoutInflater().inflate(R.layout.activity_search_results, contentFrameLayout);
+
         Log.d(TAG, "Received intent from SearchActivity");
 
         // Get the Intent that started this activity
@@ -95,15 +98,15 @@ public class RecipeResultsActivity extends AppCompatActivity {
 
             // Launch new Activity when ListView item is clicked
             // @MARTIN: Change RecipeInfo.class to your class
-             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             // When clicked, open new Activity for Recipe's full info
-             Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
-             intent.putExtra("recipe_id", recipes[position].getId());
-             intent.putExtra("recipe_title", recipes[position].getId());
-             startActivity(intent);
-             }
-             });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // When clicked, open new Activity for Recipe's full info
+                    Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
+                    intent.putExtra("recipe_id", recipes[position].getId());
+                    intent.putExtra("recipe_title", recipes[position].getId());
+                    startActivity(intent);
+                }
+            });
 
         }
 
@@ -112,7 +115,7 @@ public class RecipeResultsActivity extends AppCompatActivity {
     /**
      * Method for filter option button in Recipe Results Activity
      * Launches Filter Activity and passes ingredientList
-      * @param view
+     * @param view
      */
     public void filterResults(View view) {
         Log.d(TAG, "About to create intent for Filters Activity");

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class RecipeStepsActivity extends AppCompatActivity {
+public class RecipeStepsActivity extends BaseActivity {
 
     /**
      * Launches GetRecipeStepsAsync to get the steps from API call
@@ -37,7 +38,9 @@ public class RecipeStepsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_steps);
+
+        FrameLayout contentFrameLayout = findViewById(R.id.content_frame); //Remember this is the FrameLayout area within your activity_main.xml
+        getLayoutInflater().inflate(R.layout.activity_recipe_steps, contentFrameLayout);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("recipesdb");
@@ -87,7 +90,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
             }
 
 
-            mRecyclerView = (RecyclerView) findViewById(R.id.stepDetails);
+            mRecyclerView = findViewById(R.id.stepDetails);
             mLayoutManager = new LinearLayoutManager(this);
             mAdapter = new StepsAdapter(stepString);
             mRecyclerView.setLayoutManager(mLayoutManager);

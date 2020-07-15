@@ -4,9 +4,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/grey_400</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimations</item>
+        <item name="android:statusBarColor">@color/login_form_details_light</item>
     </style>
 
     <style name="ActivityAnimations" parent="@android:style/Animation.Activity">

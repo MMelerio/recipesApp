@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#14171a</color>
+    <color name="colorPrimaryDark">@color/grey_400</color>
     <color name="colorAccent">#59c3c3</color>
+
 
     <!-- colors for button style -->
     <color name="gradient_start_color">#4c84ff</color>

@@ -8,26 +8,24 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.squareup.picasso.Picasso;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     private static final String TAG = "SearchActivity";
     public ArrayList<String> ingredientsList;
@@ -35,11 +33,12 @@ public class SearchActivity extends AppCompatActivity {
     public TextView autocomplete_text;
     private EditText EditTextInput;
     private String first_hit;
-    private Handler handler = new Handler();
-    private long delay = 500; // autocomplete delay .5 s
-    private long last_text_edit = 0;
 
-    // Runnable for Autocomplete delay (0.5 secs after last keystroke)
+    long delay = 500; // 0.5 seconds after user stops typing
+    long last_text_edit = 0;
+    Handler handler = new Handler();
+
+    // Runs Autocomplete .5 secs after last keystroke
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
@@ -51,13 +50,14 @@ public class SearchActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
 
-        Log.d(TAG, "Received intent from MainActivity");
+        FrameLayout contentFrameLayout = findViewById(R.id.content_frame); //Remember this is the FrameLayout area within your activity_main.xml
+        getLayoutInflater().inflate(R.layout.activity_search, contentFrameLayout);
+
+        Log.d(TAG, "Received intent from BaseActivity");
 
         // Get the Intent that started this activity
         Intent intent = getIntent();
@@ -72,11 +72,12 @@ public class SearchActivity extends AppCompatActivity {
 
 
         // Add listener to EditText to launch autocomplete per keystroke
-        EditTextInput = (EditText) findViewById(R.id.search);
+        EditTextInput = findViewById(R.id.search);
         EditTextInput.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -178,7 +179,7 @@ public class SearchActivity extends AppCompatActivity {
      * Creates custom layout for Ingredient ListView to
      * include checkbox and delete button
      */
-    private class CustomAdapter extends ArrayAdapter<String> {
+    public class CustomAdapter extends ArrayAdapter<String> {
 
         public static final String TAG = "SearchActivity: customAdapter";
         private final Context context;
