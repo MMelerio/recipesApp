@@ -1,6 +1,7 @@
 package com.example.myrecipeapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,11 +9,23 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Switch;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class FiltersActivity extends AppCompatActivity {
 
     /**
@@ -22,8 +35,8 @@ public class FiltersActivity extends AppCompatActivity {
 
     private static final String TAG = "FiltersActivity";
     public HashMap<String, Boolean> filters = new HashMap<>();
-    public ArrayList<String> ingredientsList = new ArrayList<>();
     public Button filterResultsButton;
+    public ArrayList<Integer> idList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +46,10 @@ public class FiltersActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity
         Intent intent = getIntent();
-        ingredientsList = intent.getStringArrayListExtra("ingredients");
+        idList = intent.getIntegerArrayListExtra("idList");
 
         // Initialize Filters button
         filterResultsButton = findViewById(R.id.filterButton);
-
 
     }
 
@@ -47,7 +59,6 @@ public class FiltersActivity extends AppCompatActivity {
      * @param view
      */
     public void filter(View view) {
-        Log.d(TAG, "Creating intent for Search Results Activity to update results with filters");
 
         CheckBox dairy = findViewById(R.id.dairy);
         if(dairy.isChecked()){
@@ -72,10 +83,12 @@ public class FiltersActivity extends AppCompatActivity {
 
         Log.d(TAG, "Users filters: " + filters);
 
-        // Launch RecipeResultsActivity to display results based on filters
-        Intent intent = new Intent(this, RecipeResultsActivity.class);
+        // Launch FilterResultsActivity to display results based on filters
+        Intent intent = new Intent(this, FilterResultsActivity.class);
+        Log.d(TAG, "Creating intent for FilterResultsActivity to display results with filters");
         intent.putExtra("filters", filters);
-        intent.putExtra("ingredients", ingredientsList);
+        Log.d(TAG, String.valueOf(idList));
+        intent.putExtra("idList", idList);
         startActivity(intent);
     }
 

@@ -35,13 +35,11 @@ public class SearchActivity extends AppCompatActivity {
     public TextView autocomplete_text;
     private EditText EditTextInput;
     private String first_hit;
+    private Handler handler = new Handler();
+    private long delay = 500; // autocomplete delay .5 s
+    private long last_text_edit = 0;
 
-
-    long delay = 500; // 0.5 seconds after user stops typing
-    long last_text_edit = 0;
-    Handler handler = new Handler();
-
-    // Runs Autocomplete .5 secs after last keystroke
+    // Runnable for Autocomplete delay (0.5 secs after last keystroke)
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
@@ -79,7 +77,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -181,7 +178,7 @@ public class SearchActivity extends AppCompatActivity {
      * Creates custom layout for Ingredient ListView to
      * include checkbox and delete button
      */
-    public class CustomAdapter extends ArrayAdapter<String> {
+    private class CustomAdapter extends ArrayAdapter<String> {
 
         public static final String TAG = "SearchActivity: customAdapter";
         private final Context context;

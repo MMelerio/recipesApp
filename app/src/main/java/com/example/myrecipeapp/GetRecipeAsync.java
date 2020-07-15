@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class GetRecipeAsync implements Runnable {
 
-    private RecipeResultsActivity activity;;
+    private RecipeResultsActivity activity;
 
     public ArrayList<String> ingredientsList;
 
@@ -39,10 +39,10 @@ public class GetRecipeAsync implements Runnable {
         RecipeLoader loader = new RecipeLoader();
 
         // Now, call the function that will get the results from the API
-
         loader.getRecipeAndPostResults(ingredients, new RecipeResultHandler() {
+
             @Override
-            public void handleResult(final ArrayList<RecipeFull> recipes) {
+            public void handleResult(final Recipe[] recipes) {
                 Log.d("GetRecipeAsync", "Back from API, but still on background thread.");
                 // At this point we will be back from the API with the results stored in `elements`
 
