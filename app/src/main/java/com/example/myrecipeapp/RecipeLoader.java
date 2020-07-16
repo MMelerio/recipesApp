@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class RecipeLoader {
 
-    // Some extra API keys: "0d5bedd68f2243ce9a22746a4626a5dd"; "40dbe64d6bcc4634b8b49e64a6936e48"; "f84904e3b9564ea2966a4f537c261b8a"
-    private static final String API_KEY = "cab6a9c0a9f8487fb902b9f9a2558a58";
+    // Some extra API keys: "cab6a9c0a9f8487fb902b9f9a2558a58"; "40dbe64d6bcc4634b8b49e64a6936e48"; "f84904e3b9564ea2966a4f537c261b8a"
+    private static final String API_KEY = "0d5bedd68f2243ce9a22746a4626a5dd";
     private static final String URL_ENDPOINT_RECIPE = "https://api.spoonacular.com/recipes/findByIngredients";
     private String apiCharset;
 

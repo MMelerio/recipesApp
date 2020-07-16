@@ -23,7 +23,7 @@ public class Autocomplete implements Runnable {
 
     // Create variables for URL elements
     private static final String url = "https://api.spoonacular.com/food/ingredients/";
-    private static final String key = "a3f6c7c9e522490c86b86681e683606b";
+    private static final String key = "cab6a9c0a9f8487fb902b9f9a2558a58";
     private static final String charset = "UTF-8";
     private static final String TAG = "Autocomplete";
     private final String input;

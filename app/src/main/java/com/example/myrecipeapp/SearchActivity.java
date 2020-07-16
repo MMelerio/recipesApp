@@ -2,6 +2,7 @@ package com.example.myrecipeapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -38,19 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private long delay = 500; // autocomplete delay .5 s
     private long last_text_edit = 0;
-
-    // Runnable for Autocomplete delay (0.5 secs after last keystroke)
-    private Runnable input_finish_checker = new Runnable() {
-        public void run() {
-            if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
-                String input_string = EditTextInput.getText().toString();
-
-                Autocomplete auto_runnable = new Autocomplete(input_string, SearchActivity.this);
-                new Thread(auto_runnable).start();
-            }
-        }
-    };
-
+    private Button findRecipesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +48,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d(TAG, "Received intent from MainActivity");
 
-        // Get the Intent that started this activity
-        Intent intent = getIntent();
-
-        // Create the List and the ArrayAdapter
+        // Create the List for user's inputted ingredients
         ingredientsList = new ArrayList<>();
 
         // Create the CustomAdapter for the Search Results
@@ -96,6 +82,9 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        // Make FIND RECIPES button grey because ingredientsList is empty initially
+        findRecipesButton = findViewById(R.id.findRecipesButton);
+        findRecipesButton.setBackgroundColor(getResources().getColor(R.color.grey_400));
     }
 
     /**
@@ -105,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
      */
     void handleAutocompleteResult(final String result) {
         autocomplete_text = findViewById(R.id.autocomplete);
-        first_hit= result;
+        first_hit = result;
 
         if (result == null) {
             Log.d(TAG, "API results were null");
@@ -117,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
             autocomplete_text.setText(result);
         }
 
-        // Changes EditTextView's text to that of Autocomplete result's
+        // Changes search bar's text to that of Autocomplete result's when clicked
         autocomplete_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,20 +148,46 @@ public class SearchActivity extends AppCompatActivity {
             autocomplete_text.setText("");
             adapter.notifyDataSetChanged();
         }
+
+        // Indicate to user that button is clickable when they've added an ingredient
+        if (ingredientsList.size() != 0) {
+            findRecipesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        } else {
+            findRecipesButton.setBackgroundColor(getResources().getColor(R.color.grey_400));
+        }
     }
 
 
 
     /**
-     * Launches activity for Search Results
+     * Launches RecipeResultsActivity
      * Passes on ingredientsList for API call
      */
     public void findRecipes(View view) {
-        Log.d(TAG, "About to create intent for RecipeResultsActivity");
-        Intent intent = new Intent(this, RecipeResultsActivity.class);
-        intent.putExtra("ingredients", ingredientsList);
-        startActivity(intent);
+
+        if (ingredientsList.size() == 0) {
+            Toast.makeText(this, "Please add ingredients to search recipes",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Log.d(TAG, "About to create intent for RecipeResultsActivity");
+            Intent intent = new Intent(this, RecipeResultsActivity.class);
+            intent.putExtra("ingredients", ingredientsList);
+            startActivity(intent);
+        }
     }
+
+
+    // Runnable for Autocomplete delay (0.5 secs after last keystroke)
+    private Runnable input_finish_checker = new Runnable() {
+        public void run() {
+            if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
+                String input_string = EditTextInput.getText().toString();
+
+                Autocomplete auto_runnable = new Autocomplete(input_string, SearchActivity.this);
+                new Thread(auto_runnable).start();
+            }
+        }
+    };
 
     /**
      * Creates custom layout for Ingredient ListView to
@@ -203,6 +218,7 @@ public class SearchActivity extends AppCompatActivity {
             deleteImageView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     ingredientsList.remove(position);
+                    findRecipesButton.setBackgroundColor(getResources().getColor(R.color.grey_400));
                     adapter.notifyDataSetChanged();
                 }
             });
