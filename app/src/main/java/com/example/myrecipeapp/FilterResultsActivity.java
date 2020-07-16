@@ -6,21 +6,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class FilterResultsActivity extends AppCompatActivity {
 
+    /**
+     * Display filtered results to user
+     * Uses FilteredRecipesLoader runnable
+     */
+
     private static final String TAG = "FilterResultsActivity";
     public HashMap<String, Boolean> filters = new HashMap<>();
-    public ArrayList<Integer> idList = new ArrayList<>();
-    public ArrayList<RecipeFull> filteredRecipes = new ArrayList<>();
-
+    public ArrayList<String> ingredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +36,15 @@ public class FilterResultsActivity extends AppCompatActivity {
         filters = (HashMap<String, Boolean>) intent.getSerializableExtra("filters");
         Log.d(TAG, "Received filters from FiltersActivity");
 
-        // Get idList from FiltersActivity
-        idList = intent.getIntegerArrayListExtra("idList");
-        Log.d(TAG, "Received idList from FiltersActivity");
+        // Get ingredients from FiltersActivity
+        ingredients = intent.getStringArrayListExtra("ingredients");
+        Log.d(TAG, "Received ingredientsList from FiltersActivity");
 
-        // Set up a new instance of our runnable object that will be run on the background thread
-        FullRecipeLoader fullRecipeLoader = new FullRecipeLoader(this, (ArrayList<Integer>) idList);
+        // Set up a new instance of FilteredRecipesLoader runnable object that will be run on the background thread
+        FilteredRecipesLoader filteredRecipesLoader = new FilteredRecipesLoader(this, (ArrayList<String>) ingredients, filters);
 
         // Set up the thread that will use our runnable object
-        Thread t = new Thread(fullRecipeLoader);
+        Thread t = new Thread(filteredRecipesLoader);
         t.start();
 
     }
@@ -52,35 +53,8 @@ public class FilterResultsActivity extends AppCompatActivity {
      * Displays recipes in custom layout ListView
      * @param recipes
      */
-    void handleFullRecipes(final ArrayList<RecipeFull> recipes) {
-        Log.d(TAG, "Completed API calls for individual recipes");
-
-        // Check for filters
-        if (filters.get("Dairy-free")) {
-            for (RecipeFull recipe : recipes) {
-                if (recipe.getDairyFree()) {
-                    filteredRecipes.add(recipe);
-                }
-            }
-        }
-        else if (filters.get("Gluten-free")) {
-            for (RecipeFull recipe : recipes) {
-                if (recipe.getGlutenFree()) {
-                    filteredRecipes.add(recipe);
-                }
-            }
-        }
-        else if (filters.get("Vegan")) {
-            for (RecipeFull recipe : recipes) {
-                if (recipe.getVegan()) {
-                    filteredRecipes.add(recipe);
-                }
-            }
-        }
-        else {
-            filteredRecipes = recipes;
-        }
-
+    void handleFullRecipes(final Recipe[] recipes) {
+        Log.d(TAG, "Completed API call for filtered search results");
 
         // Check for an error
         if (recipes == null) {
@@ -95,18 +69,16 @@ public class FilterResultsActivity extends AppCompatActivity {
             ListView listView = findViewById(R.id.filterResults);
 
             // Create the CustomAdapter for the Search Results
-            FilteredRecipesListAdapter adapter = new FilteredRecipesListAdapter(this, R.layout.custom_recipe_layout, filteredRecipes);
+            FilteredRecipesListAdapter adapter = new FilteredRecipesListAdapter(this, R.layout.custom_recipe_layout, recipes);
             listView.setAdapter(adapter);
 
-
             // Launch new Activity when ListView item is clicked
-            // @MARTIN: Change RecipeInfo.class to your class
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // When clicked, open new Activity for Recipe's full info
                     Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
-                    intent.putExtra("recipe_id", filteredRecipes.get(position).getId());
-                    intent.putExtra("recipe_title", filteredRecipes.get(position).getTitle());
+                    intent.putExtra("recipe_id", recipes[position].getId());
+                    intent.putExtra("recipe_title", recipes[position].getTitle());
                     startActivity(intent);
                 }
             });

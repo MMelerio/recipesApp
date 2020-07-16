@@ -30,6 +30,11 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
+    /**
+     * Displays search bar and ingredients list for
+     * recipe search
+     */
+
     private static final String TAG = "SearchActivity";
     public ArrayList<String> ingredientsList;
     public CustomAdapter adapter;

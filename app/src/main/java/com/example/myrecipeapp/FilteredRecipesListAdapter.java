@@ -7,23 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+public class FilteredRecipesListAdapter extends ArrayAdapter<Recipe> {
 
-public class FilteredRecipesListAdapter extends ArrayAdapter<RecipeFull> {
     /**
      * Custom Adapter for Recipe Results ListView
      * Sets up recipe title and image in ListView item
      */
+
     public static final String TAG = "RecipeListAdapter";
     private final Context context;
     int resource;
 
-    public FilteredRecipesListAdapter(Context context, int resource, ArrayList<RecipeFull> recipes) {
+    public FilteredRecipesListAdapter(Context context, int resource, Recipe[] recipes) {
         super(context, resource, recipes);
         this.context = context;
         this.resource = resource;

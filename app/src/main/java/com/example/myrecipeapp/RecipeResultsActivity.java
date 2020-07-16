@@ -19,11 +19,15 @@ import java.util.List;
 
 public class RecipeResultsActivity extends AppCompatActivity {
 
+    /**
+     * Display recipe search results based on user's
+     * ingredients
+     */
+
     private static final String TAG = "RecipeResultsActivity";
     public ArrayList<String> ingredientsList = new ArrayList<>();
     public ImageButton filterButton;
     public Recipe[] recipeList;
-    public ArrayList<Integer> idList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +56,13 @@ public class RecipeResultsActivity extends AppCompatActivity {
         // Display the ingredients user has typed for search results
         TextView textView = findViewById(R.id.recipesTextView);
         StringBuffer sb = new StringBuffer();
-
         for (Object s : ingredientsList) {
             sb.append(s);
             sb.append(", ");
         }
-
         String str = "Recipes with: " + sb.toString();
+
+        // Remove last comma at the end of ingredients list
         textView.setText(str.substring(0, str.length() - 2));
 
         // Add filter button for search results
@@ -94,14 +98,14 @@ public class RecipeResultsActivity extends AppCompatActivity {
 
 
             // Launch new Activity when ListView item is clicked
-            // @MARTIN: Change RecipeInfo.class to your class
+            // to display recipe's full info
              listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             // When clicked, open new Activity for Recipe's full info
-             Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
-             intent.putExtra("recipe_id", recipes[position].getId());
-             intent.putExtra("recipe_title", recipes[position].getId());
-             startActivity(intent);
+                // When clicked, open new Activity for Recipe's full info
+                Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
+                intent.putExtra("recipe_id", recipes[position].getId());
+                intent.putExtra("recipe_title", recipes[position].getId());
+                startActivity(intent);
              }
              });
 
@@ -117,16 +121,9 @@ public class RecipeResultsActivity extends AppCompatActivity {
     public void filterResults(View view) {
         Log.d(TAG, "About to create intent for Filters Activity");
 
-        // Get IDs of each recipe from the API response to array list and
-        // pass it onto FilterActivity
-        for (Recipe recipe : recipeList) {
-            idList.add(recipe.getId());
-            Log.d(TAG, recipe.getId().toString());
-        }
-
         Intent intent = new Intent(this, FiltersActivity.class);
         Log.d(TAG, String.valueOf(recipeList));
-        intent.putExtra("idList", idList);
+        intent.putExtra("ingredients", ingredientsList);
         startActivity(intent);
     }
 

@@ -36,7 +36,7 @@ public class FiltersActivity extends AppCompatActivity {
     private static final String TAG = "FiltersActivity";
     public HashMap<String, Boolean> filters = new HashMap<>();
     public Button filterResultsButton;
-    public ArrayList<Integer> idList = new ArrayList<>();
+    public ArrayList<String> ingredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class FiltersActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity
         Intent intent = getIntent();
-        idList = intent.getIntegerArrayListExtra("idList");
+        ingredients = intent.getStringArrayListExtra("ingredients");
 
         // Initialize Filters button
         filterResultsButton = findViewById(R.id.filterButton);
@@ -55,7 +55,7 @@ public class FiltersActivity extends AppCompatActivity {
 
     /**
      * Checks for user's filter choices then passes on this info
-     * thru intent to launch RecipeResultsActivity
+     * thru intent to launch FiltersResultsActivity
      * @param view
      */
     public void filter(View view) {
@@ -84,11 +84,11 @@ public class FiltersActivity extends AppCompatActivity {
         Log.d(TAG, "Users filters: " + filters);
 
         // Launch FilterResultsActivity to display results based on filters
-        Intent intent = new Intent(this, FilterResultsActivity.class);
         Log.d(TAG, "Creating intent for FilterResultsActivity to display results with filters");
+
+        Intent intent = new Intent(this, FilterResultsActivity.class);
         intent.putExtra("filters", filters);
-        Log.d(TAG, String.valueOf(idList));
-        intent.putExtra("idList", idList);
+        intent.putExtra("ingredients", ingredients);
         startActivity(intent);
     }
 
