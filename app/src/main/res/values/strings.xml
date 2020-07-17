@@ -2,6 +2,7 @@
     <string name="app_name">RecipeApp</string>
     <string name="find_recipes">Find recipes</string>
     <string name="log_in">log in</string>
+    <string name="log_out">log in</string>
     <string name="app_icon">app icon</string>
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="email_address">Email address</string>
@@ -13,6 +14,9 @@
     <string name="or">or</string>
     <string name="logo">logo</string>
     <string name="save">SAVE</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="bookmarks">bookmarks</string>
 
 
 </resources>

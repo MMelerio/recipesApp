@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,9 @@ public class RecipeResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_results);
+        FrameLayout contentFrameLayout = findViewById(R.id.content_frame); //this is the FrameLayout area within activity_main.xml
+        getLayoutInflater().inflate(R.layout.activity_search_results, contentFrameLayout);
+
         Log.d(TAG, "Received intent from SearchActivity");
 
         // Get the Intent that started this activity
@@ -116,7 +119,7 @@ public class RecipeResultsActivity extends AppCompatActivity {
     /**
      * Method for filter option button in Recipe Results Activity
      * Launches Filter Activity and passes ingredientList
-      * @param view
+     * @param view
      */
     public void filterResults(View view) {
         Log.d(TAG, "About to create intent for Filters Activity");
