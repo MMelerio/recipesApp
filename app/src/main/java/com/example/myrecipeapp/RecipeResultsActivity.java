@@ -29,13 +29,13 @@ public class RecipeResultsActivity extends AppCompatActivity {
     public ArrayList<String> ingredientsList = new ArrayList<>();
     public ImageButton filterButton;
     public Recipe[] recipeList;
+    public TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        FrameLayout contentFrameLayout = findViewById(R.id.content_frame); //this is the FrameLayout area within activity_main.xml
-        getLayoutInflater().inflate(R.layout.activity_search_results, contentFrameLayout);
+        setContentView(R.layout.activity_search_results);
 
         Log.d(TAG, "Received intent from SearchActivity");
 
@@ -57,7 +57,7 @@ public class RecipeResultsActivity extends AppCompatActivity {
         t.start();
 
         // Display the ingredients user has typed for search results
-        TextView textView = findViewById(R.id.recipesTextView);
+        textView = findViewById(R.id.recipesTextView);
         StringBuffer sb = new StringBuffer();
         for (Object s : ingredientsList) {
             sb.append(s);
