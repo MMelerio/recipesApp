@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -16,27 +15,19 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.ViewHolder> {
-    Context context;
-    ArrayList<StoredData> data;
-    private OnItemClickListener mListener;
+    private ArrayList<StoredData> data;
+    private OnRecipeListener recipeListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public BookmarksAdapter(ArrayList<StoredData> data, Context context) {
+    public BookmarksAdapter(ArrayList<StoredData> data, OnRecipeListener recipeListener) {
         this.data = data;
-        this.context = context;
+        this.recipeListener = recipeListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_bookmark, parent, false), mListener);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_bookmark, parent, false);
+        return new ViewHolder(view, recipeListener);
     }
 
     @Override
@@ -50,29 +41,29 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView savedRecipeTitle;
         ImageView savedRecipeImage;
-        CardView parentLayout;
+        OnRecipeListener recipeListener;
 
-        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView, OnRecipeListener recipeListener) {
             super(itemView);
 
             savedRecipeTitle = (TextView) itemView.findViewById(R.id.savedRecipeTitle);
             savedRecipeImage = (ImageView) itemView.findViewById(R.id.savedRecipeImage);
-            parentLayout = (CardView) itemView.findViewById(R.id.cardView);
+            this.recipeListener = recipeListener;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+
         }
+
+        @Override
+        public void onClick(View v) {
+            recipeListener.onRecipeClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnRecipeListener{
+        void onRecipeClick(int position);
     }
 }

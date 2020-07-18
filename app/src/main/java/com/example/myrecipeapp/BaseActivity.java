@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -26,6 +27,8 @@ public class BaseActivity extends AppCompatActivity  {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
+    String name;
+    String email;
     private FirebaseUser mUser;
 
     @Override
@@ -36,8 +39,8 @@ public class BaseActivity extends AppCompatActivity  {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mUser != null) {
             // Name, email address, and profile photo Url
-            String name = mUser.getDisplayName();
-            String email = mUser.getEmail();
+            name = mUser.getDisplayName();
+            email = mUser.getEmail();
 
         }
 

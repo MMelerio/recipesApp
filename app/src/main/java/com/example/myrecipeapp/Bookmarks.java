@@ -26,16 +26,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Bookmarks extends AppCompatActivity {
+public class Bookmarks extends AppCompatActivity implements BookmarksAdapter.OnRecipeListener {
 
     private FirebaseDatabase mFirebaseDatabase;
-    private Query mDatabaseReference;
+    private Query mQuery;
     private FirebaseUser mUser;
     private String user;
     ArrayList<StoredData> savedRecipes;
     BookmarksAdapter adapter;
-
     RecyclerView recyclerView;
+    BookmarksAdapter.OnRecipeListener recipeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +49,23 @@ public class Bookmarks extends AppCompatActivity {
 
         user = mUser.getEmail();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("recipesdb").orderByChild("user").equalTo(user);
+        mQuery = mFirebaseDatabase.getReference().child("recipesdb").orderByChild("user").equalTo(user);
 
-        savedRecipes = new ArrayList<StoredData>();
+        savedRecipes = new ArrayList<>();
 
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        recipeListener = this;
+
+        mQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     StoredData data = dataSnapshot.getValue(StoredData.class);
                     savedRecipes.add(data);
                 }
-                adapter = new BookmarksAdapter(savedRecipes, getApplicationContext());
-                recyclerView.setAdapter(adapter);
 
-                adapter.setOnItemClickListener(new BookmarksAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
-                        intent.putExtra("activity", "Bookmark");
-                        intent.putExtra("recipe_id", savedRecipes.get(position).getRecipe_id());
-                        startActivity(intent);
-                    }
-                });
-                }
+                adapter = new BookmarksAdapter(savedRecipes, recipeListener);
+                recyclerView.setAdapter(adapter);
+            }
 
 
             @Override
@@ -82,4 +75,11 @@ public class Bookmarks extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRecipeClick(int position) {
+        Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
+        intent.putExtra("activity", "Bookmark");
+        intent.putExtra("recipe_id", savedRecipes.get(position).getRecipe_id());
+        startActivity(intent);
+    }
 }

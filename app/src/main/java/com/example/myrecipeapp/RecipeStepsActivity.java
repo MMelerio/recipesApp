@@ -1,8 +1,6 @@
 package com.example.myrecipeapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ public class RecipeStepsActivity extends BaseActivity {
     String displayUsedIngredients;
     String displayMissedIngredients;
     String origin;
+    RecipeStepsActivity mActivity;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -66,6 +66,7 @@ public class RecipeStepsActivity extends BaseActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("recipesdb");
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mActivity = this;
 
 
         Log.d(TAG, "Received intent from RecipeResultsActivity");
@@ -76,6 +77,7 @@ public class RecipeStepsActivity extends BaseActivity {
         recipe_id = intent.getIntExtra("recipe_id", 0);
 
         if(origin.equals("SearchResult")) {
+            // When it's coming from the search results and the info is coming from the previous activity
             title = intent.getStringExtra("recipe_title");
             image = intent.getStringExtra("recipe_image");
             UsedIngredients = intent.getStringArrayListExtra("UsedIngredients");
@@ -94,31 +96,60 @@ public class RecipeStepsActivity extends BaseActivity {
                 if(s2 != null) {
                     displayUsedIngredients += s2 + "\n";
                 }
+
+                TextView textView = findViewById(R.id.recipeTitle);
+                textView.setText(title);
+
+                ImageView imageView = findViewById(R.id.recipeImage);
+                Picasso.get().load(Uri.parse(image)).into(imageView);
+
+                TextView textView2 = findViewById(R.id.usedIngredients);
+                textView2.setText(displayUsedIngredients);
+
+                // Set up a new instance of our runnable object that will be run on the background thread
+                GetRecipeStepsAsync getRecipeStepsAsync = new GetRecipeStepsAsync(mActivity, recipe_id);
+
+                // Set up the thread that will use our runnable object
+                Thread t = new Thread(getRecipeStepsAsync);
+
+                // starts the thread in the background. It will automatically call the run method of
+                // the getRecipeAsync object we gave it earlier
+                t.start();
+
             }
         } else {
+            // When it's coming from the Bookmarks activity and the info is coming from the database.
             mDatabaseQuery = mFirebaseDatabase.getReference().child("recipesdb").orderByChild("recipe_id").equalTo(recipe_id);
-            mChildEventListener = new ChildEventListener() {
+            mDatabaseQuery.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    StoredData data = snapshot.getValue(StoredData.class);
-                    title = data.getTitle();
-                    image = data.getImage();
-                    displayUsedIngredients = data.getUsedIngredients();
-                    displayMissedIngredients = data.getMissedIngredients();
-                }
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        StoredData data = dataSnapshot.getValue(StoredData.class);
+                        title = data.getTitle();
+                        image = data.getImage();
+                        displayUsedIngredients = data.getUsedIngredients();
+                        displayMissedIngredients = data.getMissedIngredients();
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    }
 
-                }
+                    TextView textView = findViewById(R.id.recipeTitle);
+                    textView.setText(title);
 
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    ImageView imageView = findViewById(R.id.recipeImage);
+                    Picasso.get().load(Uri.parse(image)).into(imageView);
 
-                }
+                    TextView textView2 = findViewById(R.id.usedIngredients);
+                    textView2.setText(displayUsedIngredients);
 
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Set up a new instance of our runnable object that will be run on the background thread
+                    GetRecipeStepsAsync getRecipeStepsAsync = new GetRecipeStepsAsync(mActivity, recipe_id);
+
+                    // Set up the thread that will use our runnable object
+                    Thread t = new Thread(getRecipeStepsAsync);
+
+                    // starts the thread in the background. It will automatically call the run method of
+                    // the getRecipeAsync object we gave it earlier
+                    t.start();
 
                 }
 
@@ -126,33 +157,8 @@ public class RecipeStepsActivity extends BaseActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
-            };
-
-            mDatabaseQuery.addChildEventListener(mChildEventListener);
-
+            });
         }
-
-        TextView textView = findViewById(R.id.recipeTitle);
-        textView.setText(title);
-
-        ImageView imageView = findViewById(R.id.recipeImage);
-        Picasso.get().load(Uri.parse(image)).into(imageView);
-
-        TextView textView2 = findViewById(R.id.usedIngredients);
-        textView2.setText(displayUsedIngredients);
-
-
-
-        // Set up a new instance of our runnable object that will be run on the background thread
-        GetRecipeStepsAsync getRecipeStepsAsync = new GetRecipeStepsAsync(this, recipe_id);
-
-        // Set up the thread that will use our runnable object
-        Thread t = new Thread(getRecipeStepsAsync);
-
-        // starts the thread in the background. It will automatically call the run method of
-        // the getRecipeAsync object we gave it earlier
-        t.start();
-
     }
 
     void handleStepsListResult(RecipeSteps[] recipe) {
