@@ -2,6 +2,7 @@ package com.example.myrecipeapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +22,9 @@ public class Recipe {
     @SerializedName("missedIngredientCount")
     private Integer missedIngredientCount;
     @SerializedName("missedIngredients")
-    private List<MissedIngredient> missedIngredients = null;
+    private ArrayList<MissedIngredient> missedIngredients = null;
     @SerializedName("usedIngredients")
-    private List<UsedIngredient> usedIngredients = null;
+    private ArrayList<UsedIngredient> usedIngredients = null;
     @SerializedName("unusedIngredients")
     private List<UnusedIngredient> unusedIngredients = null;
     @SerializedName("likes")
@@ -79,19 +80,19 @@ public class Recipe {
         this.missedIngredientCount = missedIngredientCount;
     }
 
-    public List<MissedIngredient> getMissedIngredients() {
+    public ArrayList<MissedIngredient> getMissedIngredients() {
         return missedIngredients;
     }
 
-    public void setMissedIngredients(List<MissedIngredient> missedIngredients) {
+    public void setMissedIngredients(ArrayList<MissedIngredient> missedIngredients) {
         this.missedIngredients = missedIngredients;
     }
 
-    public List<UsedIngredient> getUsedIngredients() {
+    public ArrayList<UsedIngredient> getUsedIngredients() {
         return usedIngredients;
     }
 
-    public void setUsedIngredients(List<UsedIngredient> usedIngredients) {
+    public void setUsedIngredients(ArrayList<UsedIngredient> usedIngredients) {
         this.usedIngredients = usedIngredients;
     }
 
