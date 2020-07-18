@@ -2,6 +2,7 @@ package com.example.myrecipeapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Step {
@@ -11,7 +12,7 @@ public class Step {
     @SerializedName("step")
     private String step;
     @SerializedName("ingredients")
-    private List<StepsIngredients> ingredients;
+    private ArrayList<StepsIngredients> ingredients;
     @SerializedName("equipment")
     private List<Equipment> equipment;
     @SerializedName("length")
@@ -33,11 +34,11 @@ public class Step {
         this.step = step;
     }
 
-    public List<StepsIngredients> getIngredients() {
+    public ArrayList<StepsIngredients> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<StepsIngredients> ingredients) {
+    public void setIngredients(ArrayList<StepsIngredients> ingredients) {
         this.ingredients = ingredients;
     }
 

@@ -26,17 +26,18 @@ public class BaseActivity extends AppCompatActivity  {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mUser != null) {
             // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
+            String name = mUser.getDisplayName();
+            String email = mUser.getEmail();
 
         }
 
@@ -52,6 +53,9 @@ public class BaseActivity extends AppCompatActivity  {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_bookmarks:
+                        Intent bookIntent = new Intent(getApplicationContext(), Bookmarks.class);
+                        startActivity(bookIntent);
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_home:
                         Intent anIntent = new Intent(getApplicationContext(), SearchActivity.class);
