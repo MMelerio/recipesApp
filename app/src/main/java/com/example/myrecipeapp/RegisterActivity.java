@@ -28,10 +28,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+
     public static final String TAG = "TAG";
-    EditText mFullName,mEmail,mPassword,mPhone;
+
+    // Fields
+    EditText mFullName, mEmail, mPassword;
+
+    // Buttons
     Button mRegisterBtn;
     TextView mLoginBtn;
+
+
     FirebaseAuth fAuth;
     ProgressBar progressBar;
     FirebaseFirestore fStore;
@@ -52,10 +59,10 @@ public class RegisterActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-            finish();
-        }
+//        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+//            finish();
+//        }
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override

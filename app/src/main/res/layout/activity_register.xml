@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/grey_100"
     tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -25,37 +25,35 @@
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="78dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="500dp"
         android:contentDescription="Logo"
-        android:src="@drawable/aid"
+        android:src="@drawable/ic_fridge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/createText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="104dp"
+        android:textStyle="bold"
         android:fontFamily="@font/roboto"
-        android:text="Create New Account"
+        android:text="@string/create_your_account"
         android:textColor="@color/darkGrey"
         android:textColorHint="@color/login_form_details"
-        android:textSize="26sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toTopOf="@id/icon" />
 
-
-
     <EditText
         android:id="@+id/fullName"
-        android:hint="Full Name"
+        android:hint="@string/full_name"
         android:inputType="textEmailAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -70,23 +68,24 @@
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/icon" />
 
-        <EditText
-            android:id="@+id/Email"
-            android:hint="Email"
-            android:layout_marginTop="124dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/et_bg"
-            android:ems="10"
-            android:fontFamily="@font/roboto"
-            android:inputType="textPersonName"
-            android:padding="16dp"
-            android:textColor="@color/darkGrey"
-            android:textColorHint="@color/darkGrey"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline_right"
-            app:layout_constraintStart_toStartOf="@id/guideline_left"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+    <EditText
+        android:id="@+id/Email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/et_bg"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/password"
@@ -98,7 +97,7 @@
         android:ems="10"
         android:textColorHint="@color/intro_description_color"
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="@string/password"
         android:fontFamily="@font/roboto"
         android:textColor="@color/darkGrey"
         android:textSize="14sp"
@@ -110,22 +109,23 @@
         android:id="@+id/registerBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto"
+        android:layout_marginTop="24dp"
         android:background="#F1B858"
+        android:fontFamily="@font/roboto"
+        android:text="@string/register"
         android:textColor="@color/colorPrimary"
-        android:text="Register"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/password"  />
+        app:layout_constraintTop_toBottomOf="@id/password" />
 
     <TextView
         android:id="@+id/createText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
-        android:text="Already Have An Account?  Login Here"
+        android:text="Already Have An Account? Login Here"
         android:textColor="@color/darkGrey"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"

@@ -11,28 +11,34 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="49dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="45dp"
+        android:background="@color/grey_400"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/checkedbox" />
 
     <TextView
         android:id="@+id/ingredient"
-        android:layout_width="220dp"
-        android:layout_height="48dp"
+        android:layout_width="213dp"
+        android:layout_height="46dp"
+        android:background="@color/grey_300"
         android:padding="5dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
         android:text="TextView"
-        android:textSize="20sp"
+        android:textSize="16sp"
         tools:layout_editor_absoluteX="115dp"
         tools:layout_editor_absoluteY="39dp" />
 
     <ImageButton
         android:id="@+id/deleteButton"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
+        android:layout_width="48dp"
+        android:paddingRight="15dp"
+        android:layout_height="46dp"
         android:layout_weight="1"
-        android:background="#00FFFFFF"
+        android:background="#85ECA19B"
         app:srcCompat="@drawable/clear_button"
         tools:srcCompat="@drawable/clear_button" />
 

@@ -4,16 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import  androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,8 +20,13 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class BaseActivity extends AppCompatActivity  {
+public class BaseActivity extends AppCompatActivity {
 
+    FirebaseAuth fAuth;
+
+
+
+    private static final String TAG = "BaseActivity";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
@@ -59,7 +63,8 @@ public class BaseActivity extends AppCompatActivity  {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
-                        signOut();
+                        SignOut();
+                        return true;
                 }
                 return false;
             }
@@ -71,28 +76,26 @@ public class BaseActivity extends AppCompatActivity  {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         actionBarDrawerToggle.syncState();
     }
 
 
-
-    public void signOut() {
+    public void SignOut() {
         FirebaseAuth.getInstance().signOut();
-
-        GoogleSignIn.getClient(this,new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
+        GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build())
                 .signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: user has logged out ");
                 Intent anIntent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(anIntent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(BaseActivity.this, "Signout Failed.", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: Sign Out Failed ");
             }
         });
-    }
 
+    }
 }

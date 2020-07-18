@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 
 public class SplashActivity extends AppCompatActivity  {
     ProgressBar splashProgress;
-    int SPLASH_TIME = 2000; //This is 3 seconds
+    int SPLASH_TIME = 3000; //This is 3 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity  {
     //Method to run progress bar for 5 seconds
     private void playProgress() {
         ObjectAnimator.ofInt(splashProgress, "progress", 100)
-                .setDuration(4000)
+                .setDuration(5000)
                 .start();
     }
 }

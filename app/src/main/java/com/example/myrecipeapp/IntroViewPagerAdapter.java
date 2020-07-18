@@ -12,10 +12,10 @@ import java.util.List;
 
 public class IntroViewPagerAdapter extends PagerAdapter {
 
-   private Context mContext ;
-   private List<ScreenItem> mListScreen;
+    Context mContext ;
+    List<ScreenItem> mListScreen;
 
-    IntroViewPagerAdapter(Context mContext, List<ScreenItem> mListScreen) {
+    public IntroViewPagerAdapter(Context mContext, List<ScreenItem> mListScreen) {
         this.mContext = mContext;
         this.mListScreen = mListScreen;
     }
@@ -25,7 +25,6 @@ public class IntroViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assert inflater != null;
         View layoutScreen = inflater.inflate(R.layout.layout_screen,null);
 
         ImageView imgSlide = layoutScreen.findViewById(R.id.intro_img);

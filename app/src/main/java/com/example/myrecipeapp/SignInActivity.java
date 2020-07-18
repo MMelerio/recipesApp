@@ -2,6 +2,7 @@ package com.example.myrecipeapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,25 +33,38 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+
 public class SignInActivity extends AppCompatActivity {
     public static final int GOOGLE_SIGN_IN_CODE = 10005;
+    private static final String TAG = "SignActivity";
+
+    // Google
     SignInButton signIn;
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
+
     FirebaseAuth fAuth;
-    EditText mEmail,mPassword;
+
+    // Email & Password
+    EditText mEmail, mPassword;
+
     Button mLoginBtn;
-    TextView mCreateBtn,forgotTextLink;
+    TextView mCreateBtn, forgotTextLink;
     ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        signIn = findViewById(R.id.google_signIn);
+
+        // Fields
         mEmail = findViewById(R.id.Email);
         mPassword = findViewById(R.id.password);
+
         progressBar = findViewById(R.id.progressBar);
+
+        // Buttons
+        signIn = findViewById(R.id.google_signIn);
         mLoginBtn = findViewById(R.id.loginBtn);
         mCreateBtn = findViewById(R.id.createText);
         forgotTextLink = findViewById(R.id.forgotPassword);
@@ -67,53 +81,50 @@ public class SignInActivity extends AppCompatActivity {
                     mEmail.setError("Email is Required.");
                     return;
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is Required.");
                     return;
                 }
-
                 if (password.length() < 6) {
                     mPassword.setError("Password Must be >= 6 Characters");
                     return;
                 }
-
                 progressBar.setVisibility(View.VISIBLE);
 
 
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(SignInActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-                        }else {
+                        } else {
                             Toast.makeText(SignInActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
-
                     }
-                });
-
+                }
+                );
             }
         });
 
+        // Launches RegisterActivity
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
-
-
+        // Forgot password listener
         forgotTextLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final EditText resetMail = new EditText(v.getContext());
                 final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("Reset Password ?");
+
+                passwordResetDialog.setTitle("Forgot your Password?");
                 passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
                 passwordResetDialog.setView(resetMail);
 
@@ -149,6 +160,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+
         //Requests data from the user
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -157,12 +169,7 @@ public class SignInActivity extends AppCompatActivity {
 
         signInClient = GoogleSignIn.getClient(this, gso);
 
-        // Checks if user has logged in before
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (signInAccount != null || fAuth.getCurrentUser() != null) {
-            // Toast.makeText(this, "You are already Logged in", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, SearchActivity.class));
-        }
+
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,10 +181,10 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == GOOGLE_SIGN_IN_CODE) {
             Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -187,7 +194,8 @@ public class SignInActivity extends AppCompatActivity {
                 fAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(getApplicationContext(), "Log in Successfully", Toast.LENGTH_SHORT).show();startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                        Toast.makeText(getApplicationContext(), "Log in Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
 
                     }
                 });
@@ -196,5 +204,4 @@ public class SignInActivity extends AppCompatActivity {
             }
         } }
 }
-
 

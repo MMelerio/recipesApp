@@ -5,29 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:background="#FFFFFF"
-    android:padding="20dp">
-
+    android:layout_marginTop="20dp"
+    android:background="@color/grey_100"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/recipeImage"
-        android:layout_width="match_parent"
-        android:layout_height="274dp"
+        android:layout_width="300dp"
+        android:layout_height="275dp"
         android:layout_centerHorizontal="true"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/recipeTitle"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recipeImage"
         android:layout_alignBottom="@+id/recipeImage"
-        android:layout_marginBottom="0dp"
-        android:background="#BFFFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-42dp"
+        android:layout_marginBottom="-3dp"
+        android:background="@color/grey_300"
         android:fontFamily="@font/roboto"
         android:padding="10dp"
         android:scrollHorizontally="false"
         android:text="TextView"
-        android:textColor="#2C2C2C"
-        android:textSize="20sp" />
+        android:textColor="@color/darkGrey"
+        android:textSize="16sp" />
+
 
 </RelativeLayout>

@@ -1,11 +1,12 @@
 package com.example.myrecipeapp;
 
+
 public class ScreenItem {
 
-    private String Title,Description;
-    private int ScreenImg;
+    String Title, Description;
+    int ScreenImg;
 
-    ScreenItem(String title, String description, int screenImg) {
+    public ScreenItem(String title, String description, int screenImg) {
         Title = title;
         Description = description;
         ScreenImg = screenImg;

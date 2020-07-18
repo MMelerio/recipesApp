@@ -57,7 +57,7 @@ public class SearchActivity extends BaseActivity {
         ListView listView = findViewById(R.id.ingredientsListView);
         adapter = new CustomAdapter(this, R.layout.custom_ingredient_layout, ingredientsList);
         listView.setAdapter(adapter);
-
+        listView.setDivider(null);
 
         // Add listener to EditText to launch autocomplete per keystroke
         EditTextInput = (EditText) findViewById(R.id.search);

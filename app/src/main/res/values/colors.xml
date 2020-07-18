@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">@color/grey_400</color>
     <color name="colorAccent">#59c3c3</color>
 
-
     <!-- colors for button style -->
     <color name="gradient_start_color">#4c84ff</color>
     <color name="gradient_end_color">#18a3fe</color>
