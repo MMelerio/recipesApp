@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RecipeApp</string>
+    <string name="app_name">Recipe Ninja</string>
     <string name="find_recipes">Find recipes</string>
     <string name="log_in">log in</string>
     <string name="log_out">log in</string>

@@ -76,9 +76,32 @@ public class FilterResultsActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // When clicked, open new Activity for Recipe's full info
+
+                    ArrayList<UsedIngredient> usedIngredients = recipes[position].getUsedIngredients();
+                    ArrayList<String> usedIngredientsNames = new ArrayList<>();
+
+                    for (int i = 0; i < usedIngredients.size(); i++) {
+                        if(usedIngredients.get(i).getName() != null) {
+                            usedIngredientsNames.add(usedIngredients.get(i).getName());
+                        }
+                    }
+
+
+                    ArrayList<MissedIngredient> MissedIngredients = recipes[position].getMissedIngredients();
+                    ArrayList<String> MissedIngredientsNames = new ArrayList<>();
+
+                    for (int i = 0; i < MissedIngredients.size(); i++) {
+                        if (MissedIngredients.get(i).getName() != null)
+                            MissedIngredientsNames.add(MissedIngredients.get(i).getName());
+                    }
+
                     Intent intent = new Intent(getApplicationContext(), RecipeStepsActivity.class);
+                    intent.putExtra("activity", "SearchResult");
                     intent.putExtra("recipe_id", recipes[position].getId());
                     intent.putExtra("recipe_title", recipes[position].getTitle());
+                    intent.putExtra("recipe_image", recipes[position].getImage());
+                    intent.putStringArrayListExtra("UsedIngredients", usedIngredientsNames);
+                    intent.putStringArrayListExtra("missedIngredients", MissedIngredientsNames);
                     startActivity(intent);
                 }
             });
