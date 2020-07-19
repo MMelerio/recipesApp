@@ -8,9 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="383dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="414dp"
+        android:layout_height="85dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,14 +21,13 @@
             android:layout_gravity="right"
             android:fontFamily="@font/roboto"
             android:text="TextView"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             android:typeface="normal" />
 
         <ImageView
             android:id="@+id/savedRecipeImage"
-            android:layout_width="96dp"
-            android:layout_height="69dp" />
+            android:layout_width="126dp"
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 

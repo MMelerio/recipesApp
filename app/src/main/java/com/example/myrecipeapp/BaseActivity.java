@@ -52,14 +52,18 @@ public class BaseActivity extends AppCompatActivity  {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_bookmarks:
+                        Intent anIntent = new Intent(getApplicationContext(), Bookmarks.class);
+                        startActivity(anIntent);
+                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_home:
-                        Intent anIntent = new Intent(getApplicationContext(), SearchActivity.class);
-                        startActivity(anIntent);
+                        Intent intent= new Intent(getApplicationContext(), SearchActivity.class);
+                        startActivity(intent);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.logOut:
                         signOut();
+                        break;
                 }
                 return false;
             }
@@ -71,10 +75,8 @@ public class BaseActivity extends AppCompatActivity  {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         actionBarDrawerToggle.syncState();
     }
-
 
 
     public void signOut() {

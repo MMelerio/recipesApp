@@ -24,5 +24,8 @@
     <string name="register">Register</string>
     <string name="email">Email</string>
     <string name="create_your_account">Create your Account</string>
+    <string name="get_started">Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="ingredients">INGREDIENTS</string>
 
 </resources>

@@ -42,6 +42,7 @@ public class Bookmarks extends AppCompatActivity implements BookmarksAdapter.OnR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
 
+
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerSaved);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -52,6 +53,8 @@ public class Bookmarks extends AppCompatActivity implements BookmarksAdapter.OnR
         mQuery = mFirebaseDatabase.getReference().child("recipesdb").orderByChild("user").equalTo(user);
 
         savedRecipes = new ArrayList<>();
+
+        getActionBar();
 
         recipeListener = this;
 
